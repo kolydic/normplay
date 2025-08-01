@@ -166,7 +166,7 @@
             color: #ff4444;
             font-size: 12px;
             top: 50px;
-            right: 50px;
+            right: 100%;
         }
 
         .strategy-text {
@@ -179,6 +179,80 @@
         .strategy-right {
             bottom: 100px;
             right: 50px;
+        }
+
+        /* Table of Strategies */
+        .strategies-table {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            width: 300px;
+        }
+
+        .strategies-title {
+            color: #87ceeb;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: underline;
+            margin-bottom: 15px;
+        }
+
+        .strategy-item {
+            color: #87ceeb;
+            font-size: 12px;
+            margin-bottom: 8px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .strategy-item:hover {
+            background-color: rgba(135, 206, 235, 0.1);
+            border: 1px solid #87ceeb;
+        }
+
+        .strategy-item.boxed {
+            background-color: rgba(135, 206, 235, 0.1);
+            border: 1px solid #87ceeb;
+        }
+
+        .strategy-item.highlighted {
+            background-color: rgba(135, 206, 235, 0.2);
+            border: 2px solid #87ceeb;
+            color: #ffffff;
+        }
+
+        .shortcut-box {
+            position: absolute;
+            left: 320px;
+            top: 0;
+            background-color: rgba(135, 206, 235, 0.1);
+            border: 1px solid #87ceeb;
+            border-radius: 6px;
+            padding: 4px 8px;
+            color: #87ceeb;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .shortcut-box.visible {
+            opacity: 1;
+        }
+
+        .strategy-question-1 {
+            position: absolute;
+            bottom: 100px;
+            right: 50px;
+            color: #ff4444;
+            font-size: 11px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .strategy-question-1.visible {
+            opacity: 1;
         }
 
         /* Trains triangle */
@@ -334,7 +408,22 @@
 
         <!-- Additional elements -->
         <div class="legend-1">scale = amount of time spent</div>
-        <div class="strategy-text strategy-right">key questions for strategy A: what's a suitable replacement? what do u WANT to think about?</div>
+        
+        <!-- Table of Strategies -->
+        <div class="strategies-table">
+            <div class="strategies-title">LAYERS OF SELVES</div>
+            <div class="strategy-item" data-strategy="A">A represents A</div>
+            <div class="strategy-item" data-strategy="B">B represents B</div>
+            <div class="strategy-item boxed" data-strategy="AB">A represents B</div>
+            <div class="strategy-item" data-strategy="BA">B represents A</div>
+            <div class="strategy-item highlighted" data-strategy="ABA">A represents B representing A</div>
+            <div class="strategy-item" data-strategy="ABB">A represents B representing B</div>
+            <div class="strategy-item" data-strategy="BAB">B represents A representing B</div>
+            <div class="strategy-item" data-strategy="BAA">B represents A represeting A</div>
+            <div class="shortcut-box">SHORTCUT?</div>
+        </div>
+        
+        <div class="strategy-question-1">key questions for strategy: what's a suitable replacement? what do u WANT to think about?</div>
         
         <div class="trains-triangle"></div>
         <div class="trains-text">thoughts of trains??</div>
@@ -430,6 +519,41 @@
                 }
             }, 30000);
         }
+
+        // Strategy table interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const strategyItems = document.querySelectorAll('.strategy-item');
+            const shortcutBox = document.querySelector('.shortcut-box');
+            const strategyQuestion1 = document.querySelector('.strategy-question-1');
+
+            strategyItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    const strategy = this.getAttribute('data-strategy');
+                    
+                    // Show strategy question for boxed items
+                    if (this.classList.contains('boxed') || this.classList.contains('highlighted')) {
+                        strategyQuestion1.classList.add('visible');
+                    }
+                    
+                    // Show shortcut box only for "A represents B"
+                    if (strategy === 'AB') {
+                        shortcutBox.classList.add('visible');
+                    }
+                });
+
+                item.addEventListener('mouseleave', function() {
+                    const strategy = this.getAttribute('data-strategy');
+                    
+                    // Hide strategy question
+                    strategyQuestion1.classList.remove('visible');
+                    
+                    // Hide shortcut box
+                    if (strategy === 'AB') {
+                        shortcutBox.classList.remove('visible');
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html> 
