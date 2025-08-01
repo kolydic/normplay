@@ -13,6 +13,7 @@
             font-family: 'Courier New', monospace;
             overflow: hidden;
             transition: background-color 0.3s ease;
+            cursor: none;
         }
 
         .container {
@@ -204,7 +205,6 @@
             padding: 4px 8px;
             border-radius: 6px;
             transition: all 0.2s ease;
-            cursor: pointer;
         }
 
         .strategy-item:hover {
@@ -243,12 +243,13 @@
 
         .strategy-question-1 {
             position: absolute;
-            bottom: 100px;
+            bottom: 500px;
             right: 50px;
             color: #ff4444;
             font-size: 11px;
             opacity: 0;
             transition: opacity 0.2s ease;
+            max-width: 250px;
         }
 
         .strategy-question-1.visible {
@@ -461,7 +462,7 @@
 
         // Arrow key movement for cursor agent
         document.addEventListener('keydown', (e) => {
-            const step = 5;
+            const step = 15;
             
             switch(e.key) {
                 case 'ArrowUp':
@@ -520,38 +521,62 @@
             }, 30000);
         }
 
-        // Strategy table interactions
+        // Strategy table interactions with Laura
         document.addEventListener('DOMContentLoaded', function() {
             const strategyItems = document.querySelectorAll('.strategy-item');
             const shortcutBox = document.querySelector('.shortcut-box');
             const strategyQuestion1 = document.querySelector('.strategy-question-1');
+            const cursorAgent = document.getElementById('cursorAgent');
 
-            strategyItems.forEach(item => {
-                item.addEventListener('mouseenter', function() {
-                    const strategy = this.getAttribute('data-strategy');
+            function checkLauraPosition() {
+                const lauraRect = cursorAgent.getBoundingClientRect();
+                const lauraCenterX = lauraRect.left + lauraRect.width / 2;
+                const lauraCenterY = lauraRect.top + lauraRect.height / 2;
+
+                let isOverBoxedItem = false;
+                let isOverAB = false;
+
+                strategyItems.forEach(item => {
+                    const itemRect = item.getBoundingClientRect();
+                    const strategy = item.getAttribute('data-strategy');
                     
-                    // Show strategy question for boxed items
-                    if (this.classList.contains('boxed') || this.classList.contains('highlighted')) {
-                        strategyQuestion1.classList.add('visible');
-                    }
-                    
-                    // Show shortcut box only for "A represents B"
-                    if (strategy === 'AB') {
-                        shortcutBox.classList.add('visible');
+                    // Check if Laura is over this strategy item
+                    if (lauraCenterX >= itemRect.left && lauraCenterX <= itemRect.right &&
+                        lauraCenterY >= itemRect.top && lauraCenterY <= itemRect.bottom) {
+                        
+                        // Check if it's a boxed item
+                        if (item.classList.contains('boxed') || item.classList.contains('highlighted')) {
+                            isOverBoxedItem = true;
+                        }
+                        
+                        // Check if it's "A represents B"
+                        if (strategy === 'AB') {
+                            isOverAB = true;
+                        }
                     }
                 });
 
-                item.addEventListener('mouseleave', function() {
-                    const strategy = this.getAttribute('data-strategy');
-                    
-                    // Hide strategy question
+                // Show/hide strategy question based on boxed items
+                if (isOverBoxedItem) {
+                    strategyQuestion1.classList.add('visible');
+                } else {
                     strategyQuestion1.classList.remove('visible');
-                    
-                    // Hide shortcut box
-                    if (strategy === 'AB') {
-                        shortcutBox.classList.remove('visible');
-                    }
-                });
+                }
+
+                // Show/hide shortcut box based on "A represents B"
+                if (isOverAB) {
+                    shortcutBox.classList.add('visible');
+                } else {
+                    shortcutBox.classList.remove('visible');
+                }
+            }
+
+            // Check Laura's position after each movement
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || 
+                    e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                    setTimeout(checkLauraPosition, 10); // Small delay to ensure position is updated
+                }
             });
         });
     </script>
