@@ -394,9 +394,40 @@
             top: 45%;
             left: 40%;
         }
+
+        .fullscreen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(30,30,30,0.95);
+            color: #87ceeb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            z-index: 9999;
+            transition: opacity 0.3s;
+        }
+        .fullscreen-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
+    <div class="fullscreen-overlay" id="fullscreenOverlay">
+        <div style="text-align: center; line-height: 1.6;">
+            <div style="font-size: 1.5rem; margin-bottom: 2rem;">LAURA IS ON AN INSIDE-JOURNEY</div>
+            <div style="font-size: 1rem; margin-bottom: 1rem;">- laura needs to change her mind</div>
+            <div style="font-size: 1rem; margin-bottom: 1rem;">- laura needs to figure out how</div>
+            <div style="font-size: 1rem; margin-bottom: 1rem;">- laura is under your guidance</div>
+            <div style="font-size: 1rem; margin-bottom: 1rem;">- laura does not like mobile devices AT ALL</div>
+            <div style="font-size: 1rem; margin-bottom: 2rem;">- you can guide laura to move, reveal, and Engage, but you'll have to figure out how</div>
+            <div style="font-size: 1.2rem; font-weight: bold;">PRESS ENTER TO BEGIN</div>
+        </div>
+    </div>
     <div class="container">
         <!-- Quadrant System -->
         <div class="quadrant-system">
@@ -646,6 +677,29 @@
                 }
             });
         });
+
+        // Fullscreen overlay logic
+        const overlay = document.getElementById('fullscreenOverlay');
+        function enterFullscreen() {
+            const docElm = document.documentElement;
+            if (docElm.requestFullscreen) {
+                docElm.requestFullscreen();
+            } else if (docElm.mozRequestFullScreen) { /* Firefox */
+                docElm.mozRequestFullScreen();
+            } else if (docElm.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                docElm.webkitRequestFullscreen();
+            } else if (docElm.msRequestFullscreen) { /* IE/Edge */
+                docElm.msRequestFullscreen();
+            }
+            overlay.classList.add('hidden');
+            window.removeEventListener('keydown', overlayHandler);
+            window.removeEventListener('mousedown', overlayHandler);
+        }
+        function overlayHandler() {
+            enterFullscreen();
+        }
+        window.addEventListener('keydown', overlayHandler);
+        window.addEventListener('mousedown', overlayHandler);
     </script>
 </body>
 </html> 
