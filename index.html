@@ -93,17 +93,28 @@
             border: 2px solid #87ceeb;
         }
 
-        .point.anxious {
+        .point.saint {
             background-color: white;
-            top: 30%;
-            left: 30%;
+            top: 25%;
+            left: 25%;
         }
 
-        .point.minecraft {
+        .point.anxious {
+            background-color: white;
+            top: 25%;
+            right: 25%;
+        }
+
+        .point.what-are-you-doing {
             background-color: #ff4444;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            bottom: 25%;
+            left: 25%;
+        }
+
+        .point.asshole {
+            background-color: #ff4444;
+            bottom: 25%;
+            right: 25%;
         }
 
         .point-label {
@@ -112,14 +123,24 @@
             color: #87ceeb;
         }
 
-        .anxious-label {
-            top: 25%;
-            left: 35%;
+        .saint-label {
+            top: 20%;
+            left: 30%;
         }
 
-        .minecraft-label {
-            top: 55%;
-            left: 55%;
+        .anxious-label {
+            top: 20%;
+            right: 30%;
+        }
+
+        .what-are-you-doing-label {
+            bottom: 20%;
+            left: 30%;
+        }
+
+        .asshole-label {
+            bottom: 20%;
+            right: 30%;
         }
 
         /* Door shape */
@@ -129,20 +150,18 @@
             height: 30px;
             background-color: white;
             border: 2px solid #87ceeb;
-            top: 45%;
-            right: 20%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         /* Additional text elements */
-        .additional-text {
+        .legend-1 {
             position: absolute;
             color: #ff4444;
             font-size: 12px;
-        }
-
-        .scale-text {
-            top: 100px;
-            right: 100px;
+            top: 50px;
+            right: 50px;
         }
 
         .strategy-text {
@@ -164,7 +183,7 @@
         /* Trains triangle */
         .trains-triangle {
             position: absolute;
-            top: 20px;
+            top: 50px;
             left: 20px;
             width: 0;
             height: 0;
@@ -175,7 +194,7 @@
 
         .trains-text {
             position: absolute;
-            top: 25px;
+            top: 80px;
             left: 25px;
             color: #ff8c00;
             font-size: 10px;
@@ -185,7 +204,7 @@
         .cursor-agent {
             position: absolute;
             width: 20px;
-            height: 30px;
+            height: 40px;
             transition: all 0.1s ease;
         }
 
@@ -207,26 +226,26 @@
             left: 50%;
             transform: translateX(-50%);
             width: 2px;
-            height: 12px;
+            height: 16px;
             background-color: #8b0000;
         }
 
         .agent-arms {
             position: absolute;
-            top: 14px;
+            top: 16px;
             left: 50%;
             transform: translateX(-50%);
-            width: 16px;
+            width: 20px;
             height: 2px;
             background-color: #8b0000;
         }
 
         .agent-legs {
             position: absolute;
-            top: 24px;
+            top: 28px;
             left: 50%;
             transform: translateX(-50%);
-            width: 12px;
+            width: 16px;
             height: 2px;
             background-color: #8b0000;
         }
@@ -292,11 +311,17 @@
                 <div class="axis-label horizontal-label-left">saint</div>
                 <div class="axis-label horizontal-label-right">thoughts of self</div>
                 
+                <div class="point saint"></div>
+                <div class="point-label saint-label">saint</div>
+                
                 <div class="point anxious"></div>
                 <div class="point-label anxious-label">Anxious</div>
                 
-                <div class="point minecraft"></div>
-                <div class="point-label minecraft-label">Minecraft</div>
+                <div class="point what-are-you-doing"></div>
+                <div class="point-label what-are-you-doing-label">what are you even doing</div>
+                
+                <div class="point asshole"></div>
+                <div class="point-label asshole-label">asshole</div>
                 
                 <div class="door"></div>
                 
@@ -307,7 +332,7 @@
         </div>
 
         <!-- Additional elements -->
-        <div class="additional-text scale-text">scale = amount of time spent</div>
+        <div class="legend-1">scale = amount of time spent</div>
         <div class="strategy-text strategy-left">just think less? or replace, e.g. with trains</div>
         <div class="strategy-text strategy-right">key questions for strategy A: what's a suitable replacement? what do u WANT to think about?</div>
         
