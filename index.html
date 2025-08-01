@@ -256,6 +256,28 @@
             opacity: 1;
         }
 
+        .info-text-box {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            background-color: rgba(135, 206, 235, 0.1);
+            border: 1px solid #87ceeb;
+            border-radius: 6px;
+            padding: 15px;
+            color: #87ceeb;
+            font-size: 12px;
+            line-height: 1.4;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .info-text-box.visible {
+            opacity: 1;
+        }
+
         /* Trains triangle */
         .trains-triangle {
             position: absolute;
@@ -426,6 +448,11 @@
         
         <div class="strategy-question-1">key questions for strategy: what's a suitable replacement? what do u WANT to think about?</div>
         
+        <!-- Info Text Box -->
+        <div class="info-text-box">
+            placeholder
+        </div>
+        
         <div class="trains-triangle"></div>
         <div class="trains-text">thoughts of trains??</div>
 
@@ -442,8 +469,8 @@
     <script>
         // Cursor agent movement
         const cursorAgent = document.getElementById('cursorAgent');
-        let agentX = 100;
-        let agentY = 100;
+        let agentX = window.innerWidth / 2 - 110; // Center horizontally, then 100px left
+        let agentY = 50; // 50px from top
         
         cursorAgent.style.left = agentX + 'px';
         cursorAgent.style.top = agentY + 'px';
@@ -526,7 +553,10 @@
             const strategyItems = document.querySelectorAll('.strategy-item');
             const shortcutBox = document.querySelector('.shortcut-box');
             const strategyQuestion1 = document.querySelector('.strategy-question-1');
+            const infoTextBox = document.querySelector('.info-text-box');
             const cursorAgent = document.getElementById('cursorAgent');
+            
+            let isInfoBoxVisible = false;
 
             function checkLauraPosition() {
                 const lauraRect = cursorAgent.getBoundingClientRect();
@@ -576,6 +606,43 @@
                 if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || 
                     e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
                     setTimeout(checkLauraPosition, 10); // Small delay to ensure position is updated
+                }
+                
+                // Handle Enter key for info box
+                if (e.key === 'Enter') {
+                    const lauraRect = cursorAgent.getBoundingClientRect();
+                    const lauraCenterX = lauraRect.left + lauraRect.width / 2;
+                    const lauraCenterY = lauraRect.top + lauraRect.height / 2;
+                    
+                    // Check if Laura is over any interactive element
+                    let isOverInteractiveElement = false;
+                    
+                    // Check strategies
+                    strategyItems.forEach(item => {
+                        const itemRect = item.getBoundingClientRect();
+                        if (lauraCenterX >= itemRect.left && lauraCenterX <= itemRect.right &&
+                            lauraCenterY >= itemRect.top && lauraCenterY <= itemRect.bottom) {
+                            isOverInteractiveElement = true;
+                        }
+                    });
+                    
+                    // Check legend
+                    const legend = document.querySelector('.legend-1');
+                    const legendRect = legend.getBoundingClientRect();
+                    if (lauraCenterX >= legendRect.left && lauraCenterX <= legendRect.right &&
+                        lauraCenterY >= legendRect.top && lauraCenterY <= legendRect.bottom) {
+                        isOverInteractiveElement = true;
+                    }
+                    
+                    // Toggle info box if over interactive element
+                    if (isOverInteractiveElement) {
+                        isInfoBoxVisible = !isInfoBoxVisible;
+                        if (isInfoBoxVisible) {
+                            infoTextBox.classList.add('visible');
+                        } else {
+                            infoTextBox.classList.remove('visible');
+                        }
+                    }
                 }
             });
         });
