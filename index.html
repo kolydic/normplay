@@ -7,7 +7,7 @@
     <style>
         body {
             margin: 0;
-            padding: 20px;
+            padding: 200px;
             background-color: #2a2a2a;
             color: #87ceeb;
             font-family: 'Courier New', monospace;
@@ -17,8 +17,8 @@
 
         .container {
             position: relative;
-            width: 100vw;
-            height: 100vh;
+            width: calc(100vw - 400px);
+            height: calc(100vh - 400px);
         }
 
         /* Quadrant System */
@@ -61,7 +61,7 @@
         }
 
         .vertical-label-top {
-            top: 10px;
+            top: -30px;
             left: 55%;
             transform: translateX(-50%);
         }
@@ -134,8 +134,8 @@
         }
 
         .what-are-you-doing-label {
-            bottom: 20%;
-            left: 30%;
+            bottom: 10%;
+            left: 2%;
         }
 
         .asshole-label {
@@ -150,9 +150,20 @@
             height: 30px;
             background-color: white;
             border: 2px solid #87ceeb;
-            top: 50%;
-            left: 50%;
+            top: 45%;
+            left: 65%;
             transform: translate(-50%, -50%);
+        }
+
+        .doorknob {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: #8b0000;
+            border-radius: 50%;
+            top: 50%;
+            right: 0px;
+            transform: translateY(-50%);
         }
 
         /* Additional text elements */
@@ -170,10 +181,6 @@
             font-size: 11px;
         }
 
-        .strategy-left {
-            bottom: 100px;
-            left: 50px;
-        }
 
         .strategy-right {
             bottom: 100px;
@@ -183,8 +190,8 @@
         /* Trains triangle */
         .trains-triangle {
             position: absolute;
-            top: 50px;
-            left: 20px;
+            top: 200px;
+            left: -25px;
             width: 0;
             height: 0;
             border-left: 15px solid transparent;
@@ -194,8 +201,8 @@
 
         .trains-text {
             position: absolute;
-            top: 80px;
-            left: 25px;
+            top: 230px;
+            left: -20px;
             color: #ff8c00;
             font-size: 10px;
         }
@@ -307,7 +314,6 @@
                 <div class="horizontal-axis"></div>
                 
                 <div class="axis-label vertical-label-top">Conscientiousness (thoughts of others)</div>
-                <div class="axis-label vertical-label-bottom">what are you even doing</div>
                 <div class="axis-label horizontal-label-left">saint</div>
                 <div class="axis-label horizontal-label-right">thoughts of self</div>
                 
@@ -318,12 +324,14 @@
                 <div class="point-label anxious-label">Anxious</div>
                 
                 <div class="point what-are-you-doing"></div>
-                <div class="point-label what-are-you-doing-label">what are you even doing</div>
+                <div class="point-label what-are-you-doing-label">what are you even doing <br> strategy: think less?? <br> OR replace, e.g. with trains</div>
                 
                 <div class="point asshole"></div>
                 <div class="point-label asshole-label">asshole</div>
                 
-                <div class="door"></div>
+                <div class="door">
+                    <div class="doorknob"></div>
+                </div>
                 
                 <div class="arrow arrow-anxious">↓</div>
                 <div class="arrow arrow-minecraft">→</div>
@@ -333,11 +341,10 @@
 
         <!-- Additional elements -->
         <div class="legend-1">scale = amount of time spent</div>
-        <div class="strategy-text strategy-left">just think less? or replace, e.g. with trains</div>
         <div class="strategy-text strategy-right">key questions for strategy A: what's a suitable replacement? what do u WANT to think about?</div>
         
         <div class="trains-triangle"></div>
-        <div class="trains-text">thoughts of trains</div>
+        <div class="trains-text">thoughts of trains??</div>
 
         <!-- Cursor Agent -->
         <div class="cursor-agent" id="cursorAgent">
@@ -372,7 +379,7 @@
 
         // Arrow key movement for cursor agent
         document.addEventListener('keydown', (e) => {
-            const step = 20;
+            const step = 5;
             
             switch(e.key) {
                 case 'ArrowUp':
