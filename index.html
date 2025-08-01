@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normplay</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #2a2a2a;
+            color: #87ceeb;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* Quadrant System */
+        .quadrant-system {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 400px;
+            height: 300px;
+        }
+
+        .axes {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .vertical-axis {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background-color: #87ceeb;
+        }
+
+        .horizontal-axis {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #87ceeb;
+        }
+
+        .axis-label {
+            position: absolute;
+            color: #87ceeb;
+            font-size: 12px;
+        }
+
+        .vertical-label-top {
+            top: 10px;
+            left: 55%;
+            transform: translateX(-50%);
+        }
+
+        .vertical-label-bottom {
+            bottom: 10px;
+            left: 55%;
+            transform: translateX(-50%);
+        }
+
+        .horizontal-label-left {
+            left: 10px;
+            top: 55%;
+            transform: translateY(-50%);
+        }
+
+        .horizontal-label-right {
+            right: 10px;
+            top: 55%;
+            transform: translateY(-50%);
+        }
+
+        /* Points in the diagram */
+        .point {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid #87ceeb;
+        }
+
+        .point.anxious {
+            background-color: white;
+            top: 30%;
+            left: 30%;
+        }
+
+        .point.minecraft {
+            background-color: #ff4444;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .point-label {
+            position: absolute;
+            font-size: 10px;
+            color: #87ceeb;
+        }
+
+        .anxious-label {
+            top: 25%;
+            left: 35%;
+        }
+
+        .minecraft-label {
+            top: 55%;
+            left: 55%;
+        }
+
+        /* Door shape */
+        .door {
+            position: absolute;
+            width: 20px;
+            height: 30px;
+            background-color: white;
+            border: 2px solid #87ceeb;
+            top: 45%;
+            right: 20%;
+        }
+
+        /* Additional text elements */
+        .additional-text {
+            position: absolute;
+            color: #ff4444;
+            font-size: 12px;
+        }
+
+        .scale-text {
+            top: 100px;
+            right: 100px;
+        }
+
+        .strategy-text {
+            position: absolute;
+            color: #ff4444;
+            font-size: 11px;
+        }
+
+        .strategy-left {
+            bottom: 100px;
+            left: 50px;
+        }
+
+        .strategy-right {
+            bottom: 100px;
+            right: 50px;
+        }
+
+        /* Trains triangle */
+        .trains-triangle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 25px solid #cccccc;
+        }
+
+        .trains-text {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            color: #ff8c00;
+            font-size: 10px;
+        }
+
+        /* Cursor Agent */
+        .cursor-agent {
+            position: absolute;
+            width: 20px;
+            height: 30px;
+            transition: all 0.1s ease;
+        }
+
+        .agent-head {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background-color: #dda0dd;
+            border: 2px solid #8b0000;
+            border-radius: 50%;
+        }
+
+        .agent-body {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 12px;
+            background-color: #8b0000;
+        }
+
+        .agent-arms {
+            position: absolute;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 2px;
+            background-color: #8b0000;
+        }
+
+        .agent-legs {
+            position: absolute;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 2px;
+            background-color: #8b0000;
+        }
+
+        .agent-label {
+            position: absolute;
+            top: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #666666;
+            font-size: 10px;
+            text-align: center;
+        }
+
+        /* Floating text */
+        .floating-text {
+            position: absolute;
+            color: #87ceeb;
+            font-size: 14px;
+            pointer-events: none;
+            animation: fadeOut 30s linear forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Arrows */
+        .arrow {
+            position: absolute;
+            color: #87ceeb;
+            font-size: 16px;
+        }
+
+        .arrow-anxious {
+            top: 35%;
+            left: 35%;
+        }
+
+        .arrow-minecraft {
+            top: 50%;
+            left: 55%;
+        }
+
+        .arrow-trains {
+            top: 45%;
+            left: 40%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Quadrant System -->
+        <div class="quadrant-system">
+            <div class="axes">
+                <div class="vertical-axis"></div>
+                <div class="horizontal-axis"></div>
+                
+                <div class="axis-label vertical-label-top">Conscientiousness (thoughts of others)</div>
+                <div class="axis-label vertical-label-bottom">what are you even doing</div>
+                <div class="axis-label horizontal-label-left">saint</div>
+                <div class="axis-label horizontal-label-right">thoughts of self</div>
+                
+                <div class="point anxious"></div>
+                <div class="point-label anxious-label">Anxious</div>
+                
+                <div class="point minecraft"></div>
+                <div class="point-label minecraft-label">Minecraft</div>
+                
+                <div class="door"></div>
+                
+                <div class="arrow arrow-anxious">↓</div>
+                <div class="arrow arrow-minecraft">→</div>
+                <div class="arrow arrow-trains">↗</div>
+            </div>
+        </div>
+
+        <!-- Additional elements -->
+        <div class="additional-text scale-text">scale = amount of time spent</div>
+        <div class="strategy-text strategy-left">just think less? or replace, e.g. with trains</div>
+        <div class="strategy-text strategy-right">key questions for strategy A: what's a suitable replacement? what do u WANT to think about?</div>
+        
+        <div class="trains-triangle"></div>
+        <div class="trains-text">thoughts of trains</div>
+
+        <!-- Cursor Agent -->
+        <div class="cursor-agent" id="cursorAgent">
+            <div class="agent-head"></div>
+            <div class="agent-body"></div>
+            <div class="agent-arms"></div>
+            <div class="agent-legs"></div>
+            <div class="agent-label">Laura</div>
+        </div>
+    </div>
+
+    <script>
+        // Cursor agent movement
+        const cursorAgent = document.getElementById('cursorAgent');
+        let agentX = 100;
+        let agentY = 100;
+        
+        cursorAgent.style.left = agentX + 'px';
+        cursorAgent.style.top = agentY + 'px';
+
+        // Background color change on mouse movement
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            const r = Math.floor(x * 255);
+            const g = Math.floor(y * 255);
+            const b = Math.floor((x + y) / 2 * 255);
+            
+            document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+        });
+
+        // Arrow key movement for cursor agent
+        document.addEventListener('keydown', (e) => {
+            const step = 20;
+            
+            switch(e.key) {
+                case 'ArrowUp':
+                    agentY = Math.max(0, agentY - step);
+                    break;
+                case 'ArrowDown':
+                    agentY = Math.min(window.innerHeight - 50, agentY + step);
+                    break;
+                case 'ArrowLeft':
+                    agentX = Math.max(0, agentX - step);
+                    break;
+                case 'ArrowRight':
+                    agentX = Math.min(window.innerWidth - 50, agentX + step);
+                    break;
+            }
+            
+            cursorAgent.style.left = agentX + 'px';
+            cursorAgent.style.top = agentY + 'px';
+        });
+
+        // Typing functionality
+        let currentText = '';
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
+                currentText += e.key;
+            } else if (e.key === 'Enter') {
+                if (currentText.trim()) {
+                    createFloatingText(currentText);
+                    currentText = '';
+                }
+            } else if (e.key === 'Backspace') {
+                currentText = currentText.slice(0, -1);
+            }
+        });
+
+        function createFloatingText(text) {
+            const floatingText = document.createElement('div');
+            floatingText.className = 'floating-text';
+            floatingText.textContent = text;
+            
+            // Random position
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            
+            floatingText.style.left = x + 'px';
+            floatingText.style.top = y + 'px';
+            
+            document.body.appendChild(floatingText);
+            
+            // Remove after animation completes
+            setTimeout(() => {
+                if (floatingText.parentNode) {
+                    floatingText.parentNode.removeChild(floatingText);
+                }
+            }, 30000);
+        }
+    </script>
+</body>
+</html> 
