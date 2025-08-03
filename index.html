@@ -96,8 +96,8 @@
 
         .point.anxious {
             background-color: white;
-            top: 25%;
-            right: 25%;
+            top: 15%;
+            right: 15%;
         }
 
         .point.what-are-you-doing {
@@ -124,8 +124,17 @@
         }
 
         .anxious-label {
-            top: 20%;
-            right: 30%;
+            top: 15%;
+            right: 10%;
+            color: #ff4444;
+        }
+
+        .anxious-title {
+            position: absolute;
+            top: 30%;
+            right: 20%;
+            color: #87ceeb;
+            font-size: 12px;
         }
 
         .what-are-you-doing-label {
@@ -148,6 +157,7 @@
             top: 45%;
             left: 65%;
             transform: translate(-50%, -50%);
+            display: none;
         }
 
         .doorknob {
@@ -243,8 +253,8 @@
 
         .strategy-question-1 {
             position: absolute;
-            bottom: 500px;
-            right: 50px;
+            top: -60px;
+            right: 0px;
             color: #ff4444;
             font-size: 11px;
             opacity: 0;
@@ -258,7 +268,7 @@
 
         .info-text-box {
             position: absolute;
-            top: 50px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
             width: 300px;
@@ -278,6 +288,50 @@
             opacity: 1;
         }
 
+        .progress-bar {
+            position: absolute;
+            width: 200px;
+            height: 20px;
+            border: 2px solid #87ceeb;
+            background-color: transparent;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .progress-bar.visible {
+            opacity: 1;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #666666;
+            transition: width 1.5s ease;
+        }
+
+        .solution-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: black;
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            font-size: 12px;
+            line-height: 1.4;
+            max-width: 400px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .solution-box.visible {
+            opacity: 1;
+        }
+
         /* Trains triangle */
         .trains-triangle {
             position: absolute;
@@ -285,16 +339,16 @@
             left: -25px;
             width: 0;
             height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 25px solid #cccccc;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 17px solid #4682b4;
         }
 
         .trains-text {
             position: absolute;
             top: 230px;
             left: -20px;
-            color: #ff8c00;
+            color: #4682b4;
             font-size: 10px;
         }
 
@@ -380,6 +434,7 @@
             font-size: 16px;
         }
 
+        /*
         .arrow-anxious {
             top: 35%;
             left: 35%;
@@ -394,6 +449,7 @@
             top: 45%;
             left: 40%;
         }
+        */
 
         .fullscreen-overlay {
             position: fixed;
@@ -438,16 +494,14 @@
                 <div class="axis-label vertical-label-top">Conscientiousness (thoughts of others)</div>
                 <div class="axis-label horizontal-label-right">thoughts of self</div>
                 
-                <div class="point saint"></div>
                 <div class="point-label saint-label">saint</div>
                 
                 <div class="point anxious"></div>
-                <div class="point-label anxious-label">Anxious</div>
+                <div class="point-label anxious-label">=L.</div>
+                <div class="anxious-title">Anxious</div>
                 
-                <div class="point what-are-you-doing"></div>
-                <div class="point-label what-are-you-doing-label">what are you even doing <br> strategy: think less?? <br> OR replace, e.g. with trains</div>
+                <div class="point-label what-are-you-doing-label">what are you even doing then??<br>strategy: simply think less?<br>strategy: replace thoughts, e.g. with thoughts of trains?</div>
                 
-                <div class="point asshole"></div>
                 <div class="point-label asshole-label">asshole</div>
                 
                 <div class="door">
@@ -465,6 +519,7 @@
         
         <!-- Table of Strategies -->
         <div class="strategies-table">
+            <div class="strategy-question-1">key questions for strategy: what's a suitable replacement? what do u WANT to think about?</div>
             <div class="strategies-title">LAYERS OF SELVES</div>
             <div class="strategy-item" data-strategy="A">A represents A</div>
             <div class="strategy-item" data-strategy="B">B represents B</div>
@@ -477,10 +532,18 @@
             <div class="shortcut-box">SHORTCUT?</div>
         </div>
         
-        <div class="strategy-question-1">key questions for strategy: what's a suitable replacement? what do u WANT to think about?</div>
-        
         <!-- Info Text Box -->
         <div class="info-text-box">
+            placeholder
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Solution Box -->
+        <div class="solution-box" id="solutionBox">
             placeholder
         </div>
         
@@ -588,6 +651,9 @@
             const cursorAgent = document.getElementById('cursorAgent');
             
             let isInfoBoxVisible = false;
+            let hasAttemptedStrategy1 = false;
+            let hasAttemptedStrategy2 = false;
+            let currentStrategy = null;
 
             function checkLauraPosition() {
                 const lauraRect = cursorAgent.getBoundingClientRect();
@@ -665,17 +731,110 @@
                         isOverInteractiveElement = true;
                     }
                     
-                    // Toggle info box if over interactive element
+                    // Handle Enter key for showing strategy info
                     if (isOverInteractiveElement) {
-                        isInfoBoxVisible = !isInfoBoxVisible;
-                        if (isInfoBoxVisible) {
-                            infoTextBox.classList.add('visible');
-                        } else {
-                            infoTextBox.classList.remove('visible');
-                        }
+                        strategyItems.forEach(item => {
+                            const itemRect = item.getBoundingClientRect();
+                            if (lauraCenterX >= itemRect.left && lauraCenterX <= itemRect.right &&
+                                lauraCenterY >= itemRect.top && lauraCenterY <= itemRect.bottom) {
+                                const strategy = item.getAttribute('data-strategy');
+                                if (strategy === 'AB') {
+                                    infoTextBox.innerHTML = "A wants to stop defining wellness(A) as a function of [B represents A]. <br> STRATEGY: <br>reduce frequency of [A represents B]. <br><br> * will reduce frequency of [A represents B] altogether.";
+                                    currentStrategy = 'AB';
+                                    isInfoBoxVisible = true;
+                                    infoTextBox.classList.add('visible');
+                                } else if (strategy === 'ABA') {
+                                    infoTextBox.innerHTML = "A wants to stop defining wellness(A) as a function of [B represents A]. <br> STRATEGY: <br>reduce frequency of A representing [B represents A]. <br><br> * will reduce frequency of [A represents B representing A]. ";
+                                    currentStrategy = 'ABA';
+                                    isInfoBoxVisible = true;
+                                    infoTextBox.classList.add('visible');
+                                }
+                            }
+                        });
                     }
                 }
             });
+
+            // Continuous hover checking
+            function checkHover() {
+                const lauraRect = cursorAgent.getBoundingClientRect();
+                const lauraCenterX = lauraRect.left + lauraRect.width / 2;
+                const lauraCenterY = lauraRect.top + lauraRect.height / 2;
+                
+                // Check which strategy Laura is over for hover functionality
+                let foundStrategy = false;
+                strategyItems.forEach(item => {
+                    const itemRect = item.getBoundingClientRect();
+                    if (lauraCenterX >= itemRect.left && lauraCenterX <= itemRect.right &&
+                        lauraCenterY >= itemRect.top && lauraCenterY <= itemRect.bottom) {
+                        const strategy = item.getAttribute('data-strategy');
+                        if (strategy === 'AB' || strategy === 'ABA') {
+                            foundStrategy = true;
+                        }
+                    }
+                });
+                
+                // If not over any strategy, hide the box (hover functionality)
+                if (!foundStrategy && isInfoBoxVisible) {
+                    infoTextBox.classList.remove('visible');
+                    isInfoBoxVisible = false;
+                    currentStrategy = null;
+                }
+            }
+
+            // Check hover continuously
+            setInterval(checkHover, 100);
+
+            // Handle asterisk key for progress bar
+            document.addEventListener('keydown', function(e) {
+                if (e.key === '*' && currentStrategy && isInfoBoxVisible) {
+                    const progressBar = document.getElementById('progressBar');
+                    const progressFill = document.getElementById('progressFill');
+                    const solutionBox = document.getElementById('solutionBox');
+                    const door = document.querySelector('.door');
+
+                    // Show progress bar
+                    progressBar.classList.add('visible');
+                    progressFill.style.width = '66.67%'; // 2/3 filled
+
+                    // After 1.5 seconds, change to 1/3 filled and show solution
+                    setTimeout(() => {
+                        progressFill.style.width = '33.33%'; // 1/3 filled
+                        
+                        setTimeout(() => {
+                            progressBar.classList.remove('visible');
+                            
+                            if (currentStrategy === 'AB') {
+                                solutionBox.innerHTML = "SOLUTION NOT ACHIEVED. Even though A represents B less, the dependency on representations of A from actors other than A is generalized.";
+                                hasAttemptedStrategy1 = true;
+                                progressFill.style.width = '66.67%'; // 2/3 filled
+                            } else if (currentStrategy === 'ABA') {
+                                solutionBox.innerHTML = "SOLUTION NOT (yet) ACHIEVED. Because actually this is a lot harder than it sounds? So like, how? <br><br> If A represents [B represents A] less frequently, this entails both fewer thoughts of self and fewer thoughts of others. Go in that space, see what it looks like.";
+                                hasAttemptedStrategy2 = true;
+                                progressFill.style.width = '66.67%'; // 2/3 filled
+                                
+                                // Show door only after "A represents B representing A" strategy
+                                door.style.display = 'block';
+                            }
+                            
+                            solutionBox.classList.add('visible');
+                            
+                            // Hide solution box only with Enter press, not automatically
+                            // (removed the automatic timeout)
+                        }, 1500);
+                    }, 1500);
+                }
+            });
+        });
+
+        // Handle Enter key to hide solution box
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const solutionBox = document.getElementById('solutionBox');
+                if (solutionBox.classList.contains('visible')) {
+                    solutionBox.classList.remove('visible');
+                }
+            }
         });
 
         // Fullscreen overlay logic
