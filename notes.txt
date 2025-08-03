@@ -42,3 +42,6 @@ changes:
 * while the above text is showing, the a keypress of * will make appear a bar that is like, a little rectangle, and the left 2/3 is filled Grey, the right 1/3 has no fill. Then in 1.5 seconds the rectangle will appear instead as the left 1/3 filled Grey, the right 2/3 has no fill. Then a black box pops up with white text that reads: "SOLUTION NOT (yet) ACHIEVED. Because actually this is a lot harder than it sounds? So like, how? <br><br> If A represents [B represents A] less frequently, this entails both fewer thoughts of self and fewer thoughts of others. Go in that space, see what it looks like."
 
 * only once the player has attempted both strategies (pressed * under both of the above conditions, the door appears. Before then, it isn't visible 
+
+
+that's grerat. i love what you did. except laura still doesn't exist on this page and the maze looks nothing like the photo. so let me think about what we could do.. maybe i give you two photos. one photo is the maze itself. a second photo is of the same dimensions but color-codes what is a path that laura can access. you can use the photo itself then instead of trying to render the maze from scratch, and have the paths image for functionality, but not visualize it 
