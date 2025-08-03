@@ -355,8 +355,8 @@
         /* Cursor Agent */
         .cursor-agent {
             position: absolute;
-            width: 20px;
-            height: 40px;
+            width: 10px;
+            height: 20px;
             transition: all 0.1s ease;
             z-index: 3000;
         }
@@ -366,50 +366,50 @@
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 12px;
-            height: 12px;
+            width: 6px;
+            height: 6px;
             background-color: #dda0dd;
-            border: 2px solid #8b0000;
+            border: 1px solid #8b0000;
             border-radius: 50%;
         }
 
         .agent-body {
             position: absolute;
-            top: 12px;
+            top: 6px;
             left: 50%;
             transform: translateX(-50%);
-            width: 2px;
-            height: 16px;
+            width: 1px;
+            height: 8px;
             background-color: #8b0000;
         }
 
         .agent-arms {
             position: absolute;
-            top: 16px;
+            top: 8px;
             left: 50%;
             transform: translateX(-50%);
-            width: 20px;
-            height: 2px;
+            width: 10px;
+            height: 1px;
             background-color: #8b0000;
         }
 
         .agent-legs {
             position: absolute;
-            top: 28px;
+            top: 14px;
             left: 50%;
             transform: translateX(-50%);
-            width: 16px;
-            height: 2px;
+            width: 8px;
+            height: 1px;
             background-color: #8b0000;
         }
 
         .agent-label {
             position: absolute;
-            top: 35px;
+            top: 18px;
             left: 50%;
             transform: translateX(-50%);
             color: #666666;
-            font-size: 10px;
+            font-size: 6px;
             text-align: center;
         }
 
@@ -499,27 +499,8 @@
             top: 150px;
             left: 50%;
             transform: translateX(-50%);
-            width: 800px;
+            width: 600px;
             height: 600px;
-            background-image: url('maze_img.png');
-            background-size: cover;
-            background-repeat: no-repeat;
-            border: 2px solid white;
-        }
-
-        .maze-paths-overlay {
-            position: absolute;
-            top: 150px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 800px;
-            height: 600px;
-            background-image: url('maze_paths.png');
-            background-size: cover;
-            background-repeat: no-repeat;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 5;
         }
 
         .maze-dot {
@@ -628,9 +609,8 @@
         <div class="maze-container" id="mazeContainer">
             <div class="maze-title">Welcome to ~Thinking Less About Others' Thoughts Of You~!</div>
             <div class="maze" id="maze">
-                <!-- Maze background image -->
+                <!-- Canvas maze will be created here -->
             </div>
-            <div class="maze-paths-overlay" id="mazePathsOverlay"></div>
             <div class="maze-popup" id="mazePopup">placeholder</div>
         </div>
         
@@ -647,11 +627,12 @@
         </div>
     </div>
 
+    <script src="maze_script.js"></script>
     <script>
         // Cursor agent movement
         const cursorAgent = document.getElementById('cursorAgent');
-        let agentX = window.innerWidth / 2 - 110; // Center horizontally, then 100px left
-        let agentY = 50; // 50px from top
+        let agentX = 672.5; // Starting X position
+        let agentY = 0; // Starting Y position
         
         cursorAgent.style.left = agentX + 'px';
         cursorAgent.style.top = agentY + 'px';
@@ -670,6 +651,12 @@
 
         // Arrow key movement for cursor agent
         document.addEventListener('keydown', (e) => {
+            // Don't handle arrow keys if maze is active
+            const mazeContainer = document.getElementById('mazeContainer');
+            if (mazeContainer && mazeContainer.style.display === 'block') {
+                return;
+            }
+            
             const step = 15;
             
             switch(e.key) {
@@ -690,6 +677,8 @@
             cursorAgent.style.left = agentX + 'px';
             cursorAgent.style.top = agentY + 'px';
         });
+
+
 
         // Typing functionality
         let currentText = '';
@@ -889,17 +878,43 @@
                 return false;
             }
 
+            // Track if maze is active
+            let mazeActive = false;
+
             // Handle Enter key for door
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && checkDoorInteraction() && door.style.display !== 'none') {
-                    // Screen goes black after 2 seconds
+                if (e.key === 'Enter' && checkDoorInteraction() && door.style.display !== 'none' && !mazeActive) {
+                    // Immediately go black
+                    document.body.style.backgroundColor = 'black';
+                    
+                    // After 1 second, show maze container and create maze
                     setTimeout(() => {
-                        document.body.style.backgroundColor = 'black';
                         mazeContainer.style.display = 'block';
+                        mazeContainer.style.opacity = '0';
+                        mazeContainer.style.transition = 'opacity 1s ease';
                         
                         // Create maze
                         createMaze();
-                    }, 2000);
+                        mazeActive = true; // Disable door interaction after maze is created
+                        
+                        // After 1 more second, fade in the maze
+                        setTimeout(() => {
+                            mazeContainer.style.opacity = '1';
+                            
+                            // After 1 more second, fade in Laura
+                            setTimeout(() => {
+                                if (window.mazeController && window.mazeController.cursorAgent) {
+                                    window.mazeController.cursorAgent.style.opacity = '0';
+                                    window.mazeController.cursorAgent.style.transition = 'opacity 1s ease';
+                                    window.mazeController.cursorAgent.style.display = 'block';
+                                    
+                                    setTimeout(() => {
+                                        window.mazeController.cursorAgent.style.opacity = '1';
+                                    }, 100);
+                                }
+                            }, 1000);
+                        }, 1000);
+                    }, 1000);
                 }
             });
 
@@ -980,153 +995,15 @@
 
         // Maze creation function
         function createMaze() {
-            const maze = document.getElementById('maze');
-            const mazePopup = document.getElementById('mazePopup');
-            
-            // Create 11 dots (10 accessible + 1 inaccessible)
-            const dots = [
-                {x: 30, y: 200, text: "dot1_placeholder"}, // Accessible
-                {x: 80, y: 80, text: "dot2_placeholder"}, // Accessible
-                {x: 180, y: 120, text: "dot3_placeholder"}, // Accessible
-                {x: 280, y: 280, text: "dot4_placeholder"}, // Accessible
-                {x: 380, y: 220, text: "dot5_placeholder"}, // Accessible
-                {x: 480, y: 180, text: "dot6_placeholder"}, // Accessible
-                {x: 580, y: 240, text: "dot7_placeholder"}, // Accessible
-                {x: 680, y: 300, text: "dot8_placeholder"}, // Accessible
-                {x: 780, y: 360, text: "dot9_placeholder"}, // Accessible
-                {x: 720, y: 480, text: "dot10_placeholder"}, // Accessible
-                {x: 400, y: 400, text: "dot11_inaccessible"}, // Inaccessible (surrounded by walls)
-            ];
-            
-            dots.forEach((dot, index) => {
-                const dotElement = document.createElement('div');
-                dotElement.className = 'maze-dot';
-                dotElement.style.left = dot.x + 'px';
-                dotElement.style.top = dot.y + 'px';
-                dotElement.setAttribute('data-text', dot.text);
-                maze.appendChild(dotElement);
-                
-                // Add hover functionality
-                dotElement.addEventListener('mouseenter', function() {
-                    const rect = this.getBoundingClientRect();
-                    mazePopup.style.left = (rect.left + rect.width + 10) + 'px';
-                    mazePopup.style.top = rect.top + 'px';
-                    mazePopup.textContent = dot.text;
-                    mazePopup.classList.add('visible');
-                });
-                
-                dotElement.addEventListener('mouseleave', function() {
-                    mazePopup.classList.remove('visible');
-                });
-            });
-            
-            // Position Laura at maze start (left side, 1/3 down from top)
-            const mazeRect = maze.getBoundingClientRect();
-            agentX = mazeRect.left + 20; // Start at left edge
-            agentY = mazeRect.top + 200; // 1/3 down from top
-            cursorAgent.style.left = agentX + 'px';
-            cursorAgent.style.top = agentY + 'px';
-            
-            // Enable maze navigation
-            enableMazeNavigation();
+            // Use external maze script
+            if (window.mazeController) {
+                window.mazeController.createMaze();
+            } else {
+                console.error('Maze controller not loaded');
+            }
         }
 
-        // Maze navigation function
-        function enableMazeNavigation() {
-            // Remove previous keydown listener
-            document.removeEventListener('keydown', arrowKeyHandler);
-            
-            // Define maze walls (relative to maze container)
-            const mazeWalls = [
-                // Horizontal walls
-                {x: 50, y: 50, width: 300, height: 5},
-                {x: 50, y: 150, width: 200, height: 5},
-                {x: 300, y: 150, width: 200, height: 5},
-                {x: 50, y: 250, width: 300, height: 5},
-                {x: 400, y: 250, width: 150, height: 5},
-                {x: 50, y: 350, width: 200, height: 5},
-                {x: 300, y: 350, width: 250, height: 5},
-                {x: 50, y: 450, width: 500, height: 5},
-                
-                // Vertical walls
-                {x: 50, y: 50, width: 5, height: 400},
-                {x: 150, y: 50, width: 5, height: 100},
-                {x: 250, y: 50, width: 5, height: 200},
-                {x: 350, y: 50, width: 5, height: 100},
-                {x: 450, y: 50, width: 5, height: 200},
-                {x: 550, y: 50, width: 5, height: 400},
-                {x: 150, y: 200, width: 5, height: 100},
-                {x: 250, y: 250, width: 5, height: 100},
-                {x: 350, y: 200, width: 5, height: 100},
-                {x: 450, y: 250, width: 5, height: 100},
-                {x: 150, y: 350, width: 5, height: 100},
-                {x: 250, y: 350, width: 5, height: 100},
-                {x: 350, y: 350, width: 5, height: 100},
-                {x: 450, y: 350, width: 5, height: 100}
-            ];
-            
-            // Function to check collision with walls
-            function checkWallCollision(x, y) {
-                const mazeRect = maze.getBoundingClientRect();
-                const relativeX = x - mazeRect.left;
-                const relativeY = y - mazeRect.top;
-                
-                // Check if position is within maze bounds
-                if (relativeX < 0 || relativeX > mazeRect.width - 20 ||
-                    relativeY < 0 || relativeY > mazeRect.height - 40) {
-                    return true; // Collision with maze boundary
-                }
-                
-                // Check collision with each wall
-                for (let wall of mazeWalls) {
-                    if (relativeX < wall.x + wall.width &&
-                        relativeX + 20 > wall.x &&
-                        relativeY < wall.y + wall.height &&
-                        relativeY + 40 > wall.y) {
-                        return true; // Collision with wall
-                    }
-                }
-                
-                return false; // No collision
-            }
-            
-            // Define arrow key handler for maze navigation
-            function arrowKeyHandler(e) {
-                if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || 
-                    e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-                    
-                    const step = 10; // Smaller step for precise navigation
-                    let newX = agentX;
-                    let newY = agentY;
-                    
-                    switch(e.key) {
-                        case 'ArrowUp':
-                            newY = agentY - step;
-                            break;
-                        case 'ArrowDown':
-                            newY = agentY + step;
-                            break;
-                        case 'ArrowLeft':
-                            newX = agentX - step;
-                            break;
-                        case 'ArrowRight':
-                            newX = agentX + step;
-                            break;
-                    }
-                    
-                    // Check for wall collisions
-                    if (!checkWallCollision(newX, newY)) {
-                        agentX = newX;
-                        agentY = newY;
-                        cursorAgent.style.left = agentX + 'px';
-                        cursorAgent.style.top = agentY + 'px';
-                    }
-                }
-            }
-            
-            // Add keydown listener for maze navigation
-            document.addEventListener('keydown', arrowKeyHandler);
-        }
+
     </script>
 </body>
 </html> 

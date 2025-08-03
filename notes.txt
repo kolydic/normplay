@@ -1,3 +1,9 @@
+CREDITS 
+
+maze_script.js comes from https://github.com/devression/Maze-Game/blob/main/script.js . thanks @devression 
+
+---
+
 things coming: 
 
 * the inside-nemesis: Crustyfoot the Phenomenon 
