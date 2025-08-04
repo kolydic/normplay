@@ -577,16 +577,16 @@ class MazeController {
   addStaticDots() {
     // Define 10 dots with their positions and text
     const dots = [
-      {x: 2, y: 2, text: "Dot 1: First encounter"},
-      {x: 5, y: 3, text: "Dot 2: Second thoughts"},
-      {x: 8, y: 6, text: "Dot 3: Third perspective"},
-      {x: 3, y: 8, text: "Dot 4: Fourth dimension"},
-      {x: 10, y: 4, text: "Dot 5: Fifth sense"},
-      {x: 6, y: 10, text: "Dot 6: Sixth sense"},
-      {x: 12, y: 7, text: "Dot 7: Seventh heaven"},
-      {x: 8, y: 12, text: "Dot 8: Eighth wonder"},
-      {x: 9, y: 13, text: "Dot 9: Ninth life"},
-      {x: 13, y: 11, text: "Dot 10: Tenth time"}
+      {x: 2, y: 2, text: "Like everything, balance matters. <br>Caring, not caring <br>what others think.<br>The circularity, spiraling <br>it is exhausting. <br> I don't want to think about how that <br> stranger on the sidwalk feels about how I look.<br> I want wear a tight dress and dance in the park. <br> I want to wear nothing.<br> I want to stop wearing the cloak of minds over my own.<br> it is suffocating. <br>. I just need to <b>stop caring.</b>"},
+      {x: 5, y: 3, text: "I am worthy of love.<br> I am worthy of loving myself. <br>I am worthy of speaking.<br> I am worthy of the space my body takes up.<br>I am worthy of protecting my needs. <br> I deserve to feel okay existing."},
+      {x: 8, y: 6, text: "There is no such thing as deserving.<br> We just are.<br> We are just animals, existing. <br>We are strung-together states of matter and essence.<br> We are unimportant. <br>Nothing matters. Nobody matters.<br> Nobody <i> deserves </i>.<br> Therefore, I do not need to deserve; <br>the premise is fabricated."},
+      {x: 3, y: 8, text: "And yet, I long to be loved. <br>I long to love. <br>I want to be witnessed, held.<br> I want to feel like I matter. <br>I want to do good. <br>I want to serve liberation.<br> I want to stand up, stand with.<br> Stand with. <br>My voice matters because of its <br>relative gravity. <br>I need it for not me, but to stand up for/with.<br> Everything matters, because we are real. <br>We feel. That matters. <br>Pain matters. So much of it doesn't need to exist.<br> Who will speak for/with?<br> Anyone who can must. Therefore I must matter. <br>Therefore I cannot be trapped in my mind. <br>My own self does not matter. <br><br>And yet, I long to be loved."},
+      {x: 10, y: 4, text: "Who do I exist for?"},
+      {x: 6, y: 10, text: "I don't exist for any reason. <br>I just exist. <br>There is no such thing as a reason to exist."},
+      {x: 12, y: 7, text: "Is there such thing as a reason to exist?"},
+      {x: 8, y: 12, text: "I could enjoy more of this transient pleasure of existence if I could just stop worrying about how the shape of my existence feels to other people."},
+      {x: 9, y: 13, text: "It matters, how we make others feel.<br> It matters to be warm, to bring peace, to bring self-appreciation for others. <br>But do I do that for me? How do I love me?"},
+      {x: 13, y: 11, text: "I suppose I want to prefigure <br>a warm-joyful relational world. <br>If I enact the life I want, it will <i>be</i>.<br>"}
     ];
 
     console.log('Creating dots...');
@@ -648,7 +648,7 @@ class MazeController {
     bubble.style.zIndex = '9999'; // Very high z-index
     bubble.style.pointerEvents = 'none';
     bubble.style.boxShadow = '0 0 8px rgba(0,0,0,0.3)';
-    bubble.textContent = text;
+    bubble.innerHTML = text; // Use innerHTML instead of textContent to render HTML formatting
     
     document.body.appendChild(bubble);
     console.log('Text bubble created and added to DOM at:', x, y);
@@ -881,7 +881,7 @@ class MazeController {
     text.style.zIndex = '10003';
     text.style.opacity = '0';
     text.style.transition = 'opacity 2s ease';
-    text.textContent = 'now... asdfasdfasdf';
+    text.textContent = "now... what world do we want to exist in? what does it feel like? <br> let's go there";
     
     document.body.appendChild(text);
     

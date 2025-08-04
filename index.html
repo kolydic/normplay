@@ -43,7 +43,7 @@
             top: 0;
             width: 2px;
             height: 100%;
-            background-color: #87ceeb;
+            background-color: #878ceb;
         }
 
         .horizontal-axis {
@@ -52,17 +52,17 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background-color: #87ceeb;
+            background-color: #878ceb;
         }
 
         .axis-label {
             position: absolute;
-            color: #87ceeb;
+            color: #b5f4ff;
             font-size: 12px;
         }
 
         .vertical-label-top {
-            top: -30px;
+            top: -55px;
             left: 55%;
             transform: translateX(-50%);
         }
@@ -74,8 +74,8 @@
         }
 
         .horizontal-label-right {
-            right: -100px;
-            top: 55%;
+            right: -240px;
+            top: 50%;
             transform: translateY(-50%);
         }
 
@@ -119,8 +119,11 @@
         }
 
         .saint-label {
-            top: 20%;
-            left: 30%;
+            position: absolute;
+            top: 30%;
+            left: 20%;
+            color: #87ceeb;
+            font-size: 12px;
         }
 
         .anxious-label {
@@ -138,13 +141,21 @@
         }
 
         .what-are-you-doing-label {
-            bottom: 10%;
-            left: 2%;
+            position: absolute;
+            bottom: 0%;
+            left: 0%;
+            color: #87ceeb;
+            font-size: 12px;
+            max-width: 200px;
+            line-height: 1.2;
         }
 
         .asshole-label {
-            bottom: 20%;
-            right: 30%;
+            position: absolute;
+            bottom: 30%;
+            right: 20%;
+            color: #87ceeb;
+            font-size: 12px;
         }
 
         /* Door shape */
@@ -174,7 +185,7 @@
         /* Additional text elements */
         .legend-1 {
             position: absolute;
-            color: #ff4444;
+            color: #b5f4ff;
             font-size: 12px;
             top: 50px;
             right: 100%;
@@ -355,10 +366,10 @@
         /* Cursor Agent */
         .cursor-agent {
             position: absolute;
-            width: 10px;
-            height: 20px;
+            width: 13px;
+            height: 27px;
             transition: all 0.1s ease;
-            z-index: 3000;
+            z-index: 1000000; /* Higher than CRT overlay (999999) */
         }
 
         .agent-head {
@@ -366,8 +377,8 @@
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             background-color: #dda0dd;
             border: 1px solid #8b0000;
             border-radius: 50%;
@@ -375,41 +386,41 @@
 
         .agent-body {
             position: absolute;
-            top: 6px;
+            top: 8px;
             left: 50%;
             transform: translateX(-50%);
             width: 1px;
-            height: 8px;
+            height: 11px;
             background-color: #8b0000;
         }
 
         .agent-arms {
             position: absolute;
-            top: 8px;
+            top: 11px;
             left: 50%;
             transform: translateX(-50%);
-            width: 10px;
+            width: 13px;
             height: 1px;
             background-color: #8b0000;
         }
 
         .agent-legs {
             position: absolute;
-            top: 14px;
+            top: 19px;
             left: 50%;
             transform: translateX(-50%);
-            width: 8px;
+            width: 11px;
             height: 1px;
             background-color: #8b0000;
         }
 
         .agent-label {
             position: absolute;
-            top: 18px;
+            top: 24px;
             left: 50%;
             transform: translateX(-50%);
             color: #666666;
-            font-size: 6px;
+            font-size: 8px;
             text-align: center;
         }
 
@@ -494,6 +505,18 @@
             text-align: center;
         }
 
+        .maze-subtitle {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #cccccc;
+            font-size: 14px;
+            text-align: center;
+            max-width: 600px;
+            line-height: 1.4;
+        }
+
         .maze {
             position: absolute;
             top: 150px;
@@ -528,9 +551,93 @@
         .maze-popup.visible {
             opacity: 1;
         }
+
+        /* CRT Monitor Effect - inspired by https://sfpc.study */
+        .crt-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999999;
+            background: 
+                linear-gradient(
+                    rgba(18, 16, 16, 0) 50%, 
+                    rgba(0, 0, 0, 0.1) 50%
+                );
+            background-size: 100% 6px;
+            animation: flicker 0.3s infinite;
+        }
+
+        .crt-overlay::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(
+                    circle at 50% 50%,
+                    transparent 0%,
+                    rgba(0, 0, 0, 0.05) 50%,
+                    rgba(0, 0, 0, 0.15) 100%
+                );
+            pointer-events: none;
+        }
+
+        .crt-overlay::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(
+                    90deg,
+                    transparent 0%,
+                    rgba(0, 0, 0, 0.05) 50%,
+                    transparent 100%
+                );
+            background-size: 3px 100%;
+            pointer-events: none;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.99; }
+            25% { opacity: 0.98; }
+            50% { opacity: 0.97; }
+            75% { opacity: 0.98; }
+            100% { opacity: 0.99; }
+        }
+
+        /* Add subtle screen curvature effect */
+        .crt-curvature {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999998;
+            background: 
+                radial-gradient(
+                    ellipse at center,
+                    transparent 0%,
+                    transparent 60%,
+                    rgba(0, 0, 0, 0.05) 80%,
+                    rgba(0, 0, 0, 0.1) 100%
+                );
+        }
     </style>
 </head>
 <body>
+    <!-- CRT Monitor Effects -->
+    <div class="crt-curvature"></div>
+    <div class="crt-overlay"></div>
+    
     <div class="fullscreen-overlay" id="fullscreenOverlay">
         <div style="text-align: center; line-height: 1.6;">
             <div style="font-size: 1.5rem; margin-bottom: 2rem;">LAURA IS ON AN INSIDE-JOURNEY</div>
@@ -549,18 +656,18 @@
                 <div class="vertical-axis"></div>
                 <div class="horizontal-axis"></div>
                 
-                <div class="axis-label vertical-label-top">Conscientiousness (thoughts of others)</div>
-                <div class="axis-label horizontal-label-right">thoughts of self</div>
+                <div class="axis-label vertical-label-top">thoughts of others <br>(general: conscientiousness, <br>specific other: B)</div>
+                <div class="axis-label horizontal-label-right">thoughts of self (thoughts of A) </div>
                 
-                <div class="point-label saint-label">saint</div>
+                <div class="point-label saint-label">Saint</div>
                 
                 <div class="point anxious"></div>
                 <div class="point-label anxious-label">=L.</div>
                 <div class="anxious-title">Anxious</div>
                 
-                <div class="point-label what-are-you-doing-label">what are you even doing then??<br>strategy: simply think less?<br>strategy: replace thoughts, e.g. with thoughts of trains?</div>
+                <div class="point-label what-are-you-doing-label">what are you even doing then??<br>strategy: simply think less?<br>strategy: replace thoughts, <br>e.g. with thoughts of objects?</div>
                 
-                <div class="point-label asshole-label">asshole</div>
+                <div class="point-label asshole-label">Asshole</div>
                 
                 <div class="door">
                     <div class="doorknob"></div>
@@ -578,7 +685,7 @@
         <!-- Table of Strategies -->
         <div class="strategies-table">
             <div class="strategy-question-1">key questions for strategy: what's a suitable replacement? what do u WANT to think about?</div>
-            <div class="strategies-title">LAYERS OF SELVES</div>
+            <div class="strategies-title">LAYERS OF MIND-THEORIES</div>
             <div class="strategy-item" data-strategy="A">A represents A</div>
             <div class="strategy-item" data-strategy="B">B represents B</div>
             <div class="strategy-item boxed" data-strategy="AB">A represents B</div>
@@ -607,7 +714,8 @@
 
         <!-- Maze Container -->
         <div class="maze-container" id="mazeContainer">
-            <div class="maze-title">Welcome to ~Thinking Less About Others' Thoughts Of You~!</div>
+            <div class="maze-title">Welcome to <i>Thinking Less About Others' Thoughts Of You</i>, <br> in the mind of Laura!</div>
+            <div class="maze-subtitle">Don't be alarmed if Laura leaves parts of herself behind. Also don't mind that shadow-laura on the sidelines, she's not for you to face yet</div>
             <div class="maze" id="maze">
                 <!-- Canvas maze will be created here -->
             </div>
@@ -815,12 +923,12 @@
                                 lauraCenterY >= itemRect.top && lauraCenterY <= itemRect.bottom) {
                                 const strategy = item.getAttribute('data-strategy');
                                 if (strategy === 'AB') {
-                                    infoTextBox.innerHTML = "A wants to stop defining wellness(A) as a function of [B represents A]. <br> STRATEGY: <br>reduce frequency of [A represents B]. <br><br> * will reduce frequency of [A represents B] altogether.";
+                                    infoTextBox.innerHTML = "A wants to stop defining wellness(A) as a function of [B represents A]. <br> STRATEGY: <br>reduce frequency of [A represents B] <br>(think less about B) <br><br> * will reduce frequency of [A represents B] altogether.";
                                     currentStrategy = 'AB';
                                     isInfoBoxVisible = true;
                                     infoTextBox.classList.add('visible');
                                 } else if (strategy === 'ABA') {
-                                    infoTextBox.innerHTML = "A wants to stop defining wellness(A) as a function of [B represents A]. <br> STRATEGY: <br>reduce frequency of A representing [B represents A]. <br><br> * will reduce frequency of [A represents B representing A]. ";
+                                    infoTextBox.innerHTML = "A wants to stop defining wellness(A) as a function of [B represents A]. <br> STRATEGY: <br>reduce frequency of A representing [B represents A] <br> (think less about what B thinks of you). <br><br> * will reduce frequency of [A represents B representing A]. ";
                                     currentStrategy = 'ABA';
                                     isInfoBoxVisible = true;
                                     infoTextBox.classList.add('visible');
@@ -938,7 +1046,7 @@
                             progressBar.classList.remove('visible');
                             
                             if (currentStrategy === 'AB') {
-                                solutionBox.innerHTML = "SOLUTION NOT ACHIEVED. Even though A represents B less, the dependency on representations of A from actors other than A is generalized.";
+                                solutionBox.innerHTML = "SOLUTION NOT ACHIEVED. Even though A represents B less, A's self-concept dependence on representations of other actors' perceptions of A is generalized. And it's so fucking draining.";
                                 hasAttemptedStrategy1 = true;
                                 progressFill.style.width = '66.67%'; // 2/3 filled
                             } else if (currentStrategy === 'ABA') {
