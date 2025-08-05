@@ -6,6 +6,8 @@ maze_script.js comes from https://github.com/devression/Maze-Game/blob/main/scri
 
 things coming: 
 
+
+
 * the inside-nemesis: Crustyfoot the Phenomenon 
 -- a level where laura must navigate the matrix of life circumstances that link to the crustyfoot phenomenon 
 
@@ -22,6 +24,10 @@ questions might be:
     is laura worthy of love? 
     are you? 
 
+
+how does "shadow-laura" manifest here? 
+maybe on some other level page laura randomly wonders "why are my feet so crusty" 
+
 as the questions get answered, the density of the connections becomes thinner, and laura can snap through them one at a time until she is free. 
 it settles into a garden and grows into things 
 
@@ -30,24 +36,52 @@ it settles into a garden and grows into things
 * capacity to reveal Logic Bits 
 
 
+A doesn't need to represent B represnting A less, 
+A needs to amplify whenever B represents A positively 
 
-changes: 
+    at a certain point we need to revisit the strategy list. laura realizes her model is incomplete. 
+    the new model has weights for each term and when you hover over each, there are sub-models 
 
-* remove each of the three point objects for saint,  asshole, and "what are you even doing" quadrants of the grid 
+    one of the terms should represent [B represents A] which is made up of (a*(B_positive_behavior) + b*(A_negative_behavior) ) * noise factor 
+                                                                                B_positive_behavior = B_behavior + A_interpretation 
+                                                                                    same for negative 
 
-* move the anxious point up more 
+                STRATEGY: increase a 
 
-* make the anxious point have text to the right of the point in #ff4444 that reads "=L."
-
-* when Laura hovers over "A represents B", what currently comes up as "placeholder" should read: "A wants to stop defining wellness(A) as a function of [B represents A]. <br> STRATEGY: <br>reduce frequency of [A represents B]. <br><br>  * will reduce frequency of [A represents B] altogether."  
-
-* while the above text is showing, the a keypress of * will make appear a bar that is like, a little rectangle, and the left 2/3 is filled Grey, the right 1/3 has no fill. Then in 1.5 seconds the rectangle will appear instead as the left 1/3 filled Grey, the right 2/3 has no fill. Then a black box pops up with white text that reads: "SOLUTION NOT ACHIEVED. Even though A represents B less, the dependency on representations of A from actors other than A is generalized."
-
-* when laura hovers over "A represents B representing A" , what currently shows up as "placeholder" should read "A wants to stop defining wellness(A) as a function of [B represents A]. <br> STRATEGY: <br>reduce frequency of A representing [B represents A].  <br><br> * will reduce frequency of [A represents B representing A]. "
-
-* while the above text is showing, the a keypress of * will make appear a bar that is like, a little rectangle, and the left 2/3 is filled Grey, the right 1/3 has no fill. Then in 1.5 seconds the rectangle will appear instead as the left 1/3 filled Grey, the right 2/3 has no fill. Then a black box pops up with white text that reads: "SOLUTION NOT (yet) ACHIEVED. Because actually this is a lot harder than it sounds? So like, how? <br><br> If A represents [B represents A] less frequently, this entails both fewer thoughts of self and fewer thoughts of others. Go in that space, see what it looks like."
-
-* only once the player has attempted both strategies (pressed * under both of the above conditions, the door appears. Before then, it isn't visible 
+        
 
 
-that's grerat. i love what you did. except laura still doesn't exist on this page and the maze looks nothing like the photo. so let me think about what we could do.. maybe i give you two photos. one photo is the maze itself. a second photo is of the same dimensions but color-codes what is a path that laura can access. you can use the photo itself then instead of trying to render the maze from scratch, and have the paths image for functionality, but not visualize it 
+to do: 
+* what is up with the logic for why the currently available strategies are ineffective? they don't really make sense 
+* ok actually [A represents B] should not have its own hover 
+ all strategies become accessible engaging with [A represents B representing A] 
+
+when laura engages w/ ABA, the branch of model terms appear below. with subterms coming off like fractals 
+i think the complexity could be represented by having too many terms overlapping with each other so that as you get deeper, they all overlap and become illegible
+every strategy fails for the same reason: actually B has nothing to do with the solution. we need to think about the generalized solutions in the mind of laura. 
+    so let's go into laura's mind about this at a deeper level 
+        --> maze 
+
+
+
+* make the "clue" for Engage via enter key clearer in the instructions 
+
+
+* ferny can change/add dots here: addStaticDots() in maze_script.js 
+    check that dots as labeled here are not refrenced by labels elsewhere, or update there if new 
+
+
+
+the layers of selves visual (face in the face). what layers of self are being engaged and connected between A and B with each strategy 
+how are they being tethered 
+    ^^ sidequest to A-B dynamics? 
+    ok yeah we're exploring these solutions that don't have anything to do with B really bc it's about laura and her self, but 
+    what happens with B? like that still matters? 
+        cursor laura brings this up 
+        the site-overlord is like "ok laura. sure we can go there a minute" 
+
+    layers of self: the inner self, the protective self, the child self 
+
+    
+
+
