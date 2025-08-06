@@ -244,54 +244,20 @@
             color: #ffffff;
         }
 
-        .shortcut-box {
-            position: absolute;
-            left: 320px;
-            top: 0;
-            background-color: rgba(135, 206, 235, 0.1);
-            border: 1px solid #87ceeb;
-            border-radius: 6px;
-            padding: 4px 8px;
-            color: #87ceeb;
-            font-size: 12px;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-
-        .shortcut-box.visible {
-            opacity: 1;
-        }
-
-        .strategy-question-1 {
-            position: absolute;
-            top: -60px;
-            right: 0px;
-            color: #ff4444;
-            font-size: 11px;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-            max-width: 250px;
-        }
-
-        .strategy-question-1.visible {
-            opacity: 1;
-        }
-
         .info-text-box {
             position: absolute;
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
             width: 300px;
-            background-color: rgba(135, 206, 235, 0.1);
+            background-color: rgba(135, 206, 235, 0.95);
             border: 1px solid #87ceeb;
             border-radius: 6px;
             padding: 15px;
-            color: #87ceeb;
             font-size: 12px;
             line-height: 1.4;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease, color 0.3s ease;
             pointer-events: none;
         }
 
@@ -645,7 +611,7 @@
             <div style="font-size: 1rem; margin-bottom: 1rem;">- laura needs to figure out how</div>
             <div style="font-size: 1rem; margin-bottom: 1rem;">- laura is under your guidance</div>
             <div style="font-size: 1rem; margin-bottom: 1rem;">- laura does not like mobile devices AT ALL</div>
-            <div style="font-size: 1rem; margin-bottom: 2rem;">- you can guide laura to move, reveal, and Engage, but you'll have to figure out how</div>
+            <div style="font-size: 1rem; margin-bottom: 2rem;">- you can guide laura to <span style="position: relative;">Move<div style="position: absolute; top: 100%; left: 50%; transform: translateX(-50%); font-size: 10px; color: rgba(181, 244, 255, 0.4);">←↑→↓</div></span>, <span style="position: relative;">Reveal<div style="position: absolute; top: 100%; left: 50%; transform: translateX(-50%); font-size: 10px; color: rgba(181, 244, 255, 0.4);">hover / <svg width="12" height="12" viewBox="0 0 12 12" style="display: inline-block; vertical-align: middle;"><polygon points="0,0 12,6 6,8 4,12" fill="rgba(181, 244, 255, 0.4)"/></svg></div></span>, and <span style="position: relative;">Engage<div style="position: absolute; top: 100%; left: 50%; transform: translateX(-50%); font-size: 10px; color: rgba(181, 244, 255, 0.4);">↵</div></span></div>
             <div style="font-size: 1.2rem; font-weight: bold;">PRESS ENTER TO BEGIN</div>
         </div>
     </div>
@@ -672,10 +638,6 @@
                 <div class="door">
                     <div class="doorknob"></div>
                 </div>
-                
-                <div class="arrow arrow-anxious">↓</div>
-                <div class="arrow arrow-minecraft">→</div>
-                <div class="arrow arrow-trains">↗</div>
             </div>
         </div>
 
@@ -684,17 +646,50 @@
         
         <!-- Table of Strategies -->
         <div class="strategies-table">
-            <div class="strategy-question-1">key questions for strategy: what's a suitable replacement? what do u WANT to think about?</div>
             <div class="strategies-title">LAYERS OF MIND-THEORIES</div>
             <div class="strategy-item" data-strategy="A">A represents A</div>
             <div class="strategy-item" data-strategy="B">B represents B</div>
-            <div class="strategy-item boxed" data-strategy="AB">A represents B</div>
+            <div class="strategy-item" data-strategy="AB">A represents B</div>
             <div class="strategy-item" data-strategy="BA">B represents A</div>
             <div class="strategy-item highlighted" data-strategy="ABA">A represents B representing A</div>
             <div class="strategy-item" data-strategy="ABB">A represents B representing B</div>
             <div class="strategy-item" data-strategy="BAB">B represents A representing B</div>
             <div class="strategy-item" data-strategy="BAA">B represents A represeting A</div>
-            <div class="shortcut-box">SHORTCUT?</div>
+            <div class="strategy-item">. . .</div>
+        </div>
+        
+        <!-- Branch structure for ABA -->
+        <div class="branch-structure" id="branchStructure" style="display: none; position: absolute; background-color: rgba(135, 206, 235, 0.3); border: 1px solid #87ceeb; border-radius: 6px; padding: 15px; color: #87ceeb; font-size: 12px; line-height: 1.4; max-width: 600px; z-index: 1000;">
+            <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-direction: row;">
+                <div style="background-color: rgba(135, 206, 235, 0.2); border: 1px solid #87ceeb; border-radius: 4px; padding: 8px; margin: 2px; transform: translateY(-3px); flex: 1; text-align: center;">
+                    A's model of A
+                </div>
+                <div style="background-color: rgba(135, 206, 235, 0.2); border: 1px solid #87ceeb; border-radius: 4px; padding: 8px; margin: 2px; transform: translateY(2px); flex: 1; text-align: center;">
+                    A's model of B
+                </div>
+                <div style="background-color: rgba(135, 206, 235, 0.2); border: 1px solid #87ceeb; border-radius: 4px; padding: 8px; margin: 2px; transform: translateY(-1px); flex: 1; text-align: center;">
+                    B's model of A
+                </div>
+                <div style="background-color: rgba(135, 206, 235, 0.2); border: 1px solid #87ceeb; border-radius: 4px; padding: 8px; margin: 2px; transform: translateY(4px); flex: 1; text-align: center;">
+                    A's model of B's model of A
+                </div>
+            </div>
+            <div style="margin-bottom: 10px;">update frequency (A) [not always equal] update frequency (B)</div>
+            <div style="font-style: italic; margin-bottom: 10px;">
+                models unstatic<br>
+                does laura update too often?<br>
+                representation frequency draining<br>
+                cognitive resources<br>
+                finite resources<br>
+                problem detected<br>
+                problem detection demands cognitive resources<br>
+                <span style="opacity: 0.8;">problem detected</span><br>
+                <span style="opacity: 0.6;">problem detection demands cognitive resources</span><br>
+                <span style="opacity: 0.4;">problem detected</span>
+            </div>
+            <div style="font-weight: bold;">
+                please engage. <span style="opacity: 0.8;">p</span><span style="opacity: 0.6;">l</span><span style="opacity: 0.4;">e</span><span style="opacity: 0.2;">a</span><span style="opacity: 0.1;">s</span><span style="opacity: 0.05;">e</span>
+            </div>
         </div>
         
         <!-- Info Text Box -->
@@ -755,6 +750,12 @@
             const b = Math.floor((x + y) / 2 * 255);
             
             document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+            
+            // Update infoTextBox color to match background
+            const infoTextBox = document.querySelector('.info-text-box');
+            if (infoTextBox && infoTextBox.classList.contains('visible')) {
+                infoTextBox.style.color = `rgb(${r}, ${g}, ${b})`;
+            }
         });
 
         // Arrow key movement for cursor agent
@@ -829,13 +830,11 @@
         // Strategy table interactions with Laura
         document.addEventListener('DOMContentLoaded', function() {
             const strategyItems = document.querySelectorAll('.strategy-item');
-            const shortcutBox = document.querySelector('.shortcut-box');
-            const strategyQuestion1 = document.querySelector('.strategy-question-1');
             const infoTextBox = document.querySelector('.info-text-box');
+            const branchStructure = document.getElementById('branchStructure');
             const cursorAgent = document.getElementById('cursorAgent');
             
             let isInfoBoxVisible = false;
-            let hasAttemptedStrategy1 = false;
             let hasAttemptedStrategy2 = false;
             let currentStrategy = null;
 
@@ -844,8 +843,8 @@
                 const lauraCenterX = lauraRect.left + lauraRect.width / 2;
                 const lauraCenterY = lauraRect.top + lauraRect.height / 2;
 
-                let isOverBoxedItem = false;
-                let isOverAB = false;
+                let isOverABA = false;
+                let abaItem = null;
 
                 strategyItems.forEach(item => {
                     const itemRect = item.getBoundingClientRect();
@@ -855,30 +854,22 @@
                     if (lauraCenterX >= itemRect.left && lauraCenterX <= itemRect.right &&
                         lauraCenterY >= itemRect.top && lauraCenterY <= itemRect.bottom) {
                         
-                        // Check if it's a boxed item
-                        if (item.classList.contains('boxed') || item.classList.contains('highlighted')) {
-                            isOverBoxedItem = true;
-                        }
-                        
-                        // Check if it's "A represents B"
-                        if (strategy === 'AB') {
-                            isOverAB = true;
+                        // Check if it's "A represents B representing A"
+                        if (strategy === 'ABA') {
+                            isOverABA = true;
+                            abaItem = item;
                         }
                     }
                 });
 
-                // Show/hide strategy question based on boxed items
-                if (isOverBoxedItem) {
-                    strategyQuestion1.classList.add('visible');
+                // Show/hide branch structure based on "A represents B representing A"
+                if (isOverABA && abaItem) {
+                    const abaRect = abaItem.getBoundingClientRect();
+                    branchStructure.style.display = 'block';
+                    branchStructure.style.top = (abaRect.bottom - 130) + 'px';
+                    branchStructure.style.left = (abaRect.left - 60) + 'px';
                 } else {
-                    strategyQuestion1.classList.remove('visible');
-                }
-
-                // Show/hide shortcut box based on "A represents B"
-                if (isOverAB) {
-                    shortcutBox.classList.add('visible');
-                } else {
-                    shortcutBox.classList.remove('visible');
+                    branchStructure.style.display = 'none';
                 }
             }
 
@@ -922,16 +913,17 @@
                             if (lauraCenterX >= itemRect.left && lauraCenterX <= itemRect.right &&
                                 lauraCenterY >= itemRect.top && lauraCenterY <= itemRect.bottom) {
                                 const strategy = item.getAttribute('data-strategy');
-                                if (strategy === 'AB') {
-                                    infoTextBox.innerHTML = "A wants to stop defining wellness(A) as a function of [B represents A]. <br> STRATEGY: <br>reduce frequency of [A represents B] <br>(think less about B) <br><br> * will reduce frequency of [A represents B] altogether.";
-                                    currentStrategy = 'AB';
-                                    isInfoBoxVisible = true;
-                                    infoTextBox.classList.add('visible');
-                                } else if (strategy === 'ABA') {
-                                    infoTextBox.innerHTML = "A wants to stop defining wellness(A) as a function of [B represents A]. <br> STRATEGY: <br>reduce frequency of A representing [B represents A] <br> (think less about what B thinks of you). <br><br> * will reduce frequency of [A represents B representing A]. ";
+                                if (strategy === 'ABA') {
+                                    infoTextBox.innerHTML = "A wants for [A's model of A] to be determined with less weight applied to the term [A's model of B's model of A]<br><br>STRATEGIES:<br><br>$ to reduce B (kill B)<br>- effort: high<br>- directness: extremely low<br>- feasibility: extremely low<br>- feel-quality: nope<br><br>^ to reduce frequency of [A represents B] (increase distance between A and B)<br>- effort: variable<br>- directness: uncertain<br>- feasibility: uncertain<br>- feel-quality: sad<br><br>& to reduce frequency of [A represents B representing A]<br>- effort: variable<br>- directness: high<br>- feasibility: uncertain<br>- feel-quality: ??? (how)<br><br>* to reconstruct A's model of A<br>- effort: high<br>- directness: i forget what this means<br>- feasibility: idk<br>- feel-quality: important. you're kind of supposed to pick this one";
                                     currentStrategy = 'ABA';
                                     isInfoBoxVisible = true;
                                     infoTextBox.classList.add('visible');
+                                    
+                                    // Set initial color to match current background
+                                    const currentBgColor = document.body.style.backgroundColor;
+                                    if (currentBgColor && currentBgColor !== '') {
+                                        infoTextBox.style.color = currentBgColor;
+                                    }
                                 }
                             }
                         });
@@ -952,7 +944,7 @@
                     if (lauraCenterX >= itemRect.left && lauraCenterX <= itemRect.right &&
                         lauraCenterY >= itemRect.top && lauraCenterY <= itemRect.bottom) {
                         const strategy = item.getAttribute('data-strategy');
-                        if (strategy === 'AB' || strategy === 'ABA') {
+                        if (strategy === 'ABA') {
                             foundStrategy = true;
                         }
                     }
@@ -1045,12 +1037,8 @@
                         setTimeout(() => {
                             progressBar.classList.remove('visible');
                             
-                            if (currentStrategy === 'AB') {
-                                solutionBox.innerHTML = "SOLUTION NOT ACHIEVED. Even though A represents B less, A's self-concept dependence on representations of other actors' perceptions of A is generalized. And it's so fucking draining.";
-                                hasAttemptedStrategy1 = true;
-                                progressFill.style.width = '66.67%'; // 2/3 filled
-                            } else if (currentStrategy === 'ABA') {
-                                solutionBox.innerHTML = "SOLUTION NOT (yet) ACHIEVED. Because actually this is a lot harder than it sounds? So like, how? <br><br> If A represents [B represents A] less frequently, this entails both fewer thoughts of self and fewer thoughts of others. Go in that space of reasoning, see what it looks like.";
+                            if (currentStrategy === 'ABA') {
+                                solutionBox.innerHTML = "SOLUTION NOT (yet) ACHIEVED. Because actually this is a lot harder than it sounds? So like, how? <br><br> We need to debug A's model of A. Let's go into that space.";
                                 hasAttemptedStrategy2 = true;
                                 progressFill.style.width = '66.67%'; // 2/3 filled
                                 

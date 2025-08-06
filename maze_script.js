@@ -338,7 +338,7 @@ function rand(max) {
 
   this.getCurrentPosition = function() {
     return cellCoords;
-  };
+    };
   
     function drawSpriteCircle(coord) {
     // Clear previous position

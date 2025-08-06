@@ -51,20 +51,8 @@ A needs to amplify whenever B represents A positively
         
 
 
-to do: 
-* what is up with the logic for why the currently available strategies are ineffective? they don't really make sense 
-* ok actually [A represents B] should not have its own hover 
- all strategies become accessible engaging with [A represents B representing A] 
+complexity could be represented by having too many terms overlapping with each other so that as you get deeper, they all overlap and become illegible
 
-when laura engages w/ ABA, the branch of model terms appear below. with subterms coming off like fractals 
-i think the complexity could be represented by having too many terms overlapping with each other so that as you get deeper, they all overlap and become illegible
-every strategy fails for the same reason: actually B has nothing to do with the solution. we need to think about the generalized solutions in the mind of laura. 
-    so let's go into laura's mind about this at a deeper level 
-        --> maze 
-
-
-
-* make the "clue" for Engage via enter key clearer in the instructions 
 
 
 * ferny can change/add dots here: addStaticDots() in maze_script.js 
